@@ -1,0 +1,45 @@
+<link rel="import" href="../js/bower_components/polymer/polymer.html">
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="drawer-content">
+	<template>
+		<style>
+			:host {
+				display: block;
+				width: 100%;
+				height: 150%;
+				margin-left: 1px;
+				margin-top: -15px;
+				margin-right: -20px;
+				background-color: white;
+			}
+			content >*{
+				margin-left: 10 px;
+				margin-top: 10 px;
+			}
+		</style>
+			<div>
+				<content></content>	
+			</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'drawer-content'
+		});
+	</script>
+</dom-module>

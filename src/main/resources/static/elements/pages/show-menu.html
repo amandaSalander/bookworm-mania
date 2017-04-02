@@ -1,0 +1,83 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/paper-card/paper-card.html">
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="show-menu">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			
+			a{
+				text-decoration: none;
+				color: black;
+			}	
+			/*in max we can have 6 views, we are going to set the colors of each */
+			a:nth-child(1) >*{
+				--paper-card-background-color:#FFEB3B;
+			}
+			a:nth-child(2) >*{
+				--paper-card-background-color:#81C784;
+			}
+			a:nth-child(3) >*{
+				--paper-card-background-color:#E57373;
+			}
+			a:nth-child(4) >*{
+				--paper-card-background-color:#4DD0E1;
+			}
+			a:nth-child(5) >*{
+				--paper-card-background-color:#F48FB1;
+			}
+			a:nth-child(6) >*{
+				--paper-card-background-color:#CE93D8;
+			}			
+			paper-card{
+				width:45%;
+				height: 25%;
+				margin-bottom: 10px;
+				margin-top: 10px;
+				margin-left: 2.5%;
+			}
+			paper-card:hover{
+				box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+			}
+		</style>
+		<template is="dom-repeat" items="{{views}}">
+			<a href$="[[item.urlLink]]">
+				<paper-card  elevation="3" animated-shadow="false">
+				  <div class="card-content">
+				  	[[item.nom]]
+				  </div>
+				</paper-card>
+			</a>
+		</template>
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'show-menu',
+			properties:{
+				views:{
+					type:Array,
+					value:[{},{},{}]
+				}
+			}
+		});
+	</script>
+</dom-module>

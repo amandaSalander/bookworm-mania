@@ -1,0 +1,120 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../js/bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../js/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../js/bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../js/bower_components/paper-button/paper-button.html">
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="information-generale">
+	<template>
+		<style is="custom-style" include="iron-flex" >
+			:host {
+				display: block;
+			}
+			#image{
+				/*width: 30%;*/
+				margin-left: 20px;
+				margin-top: 20px;
+				@apply(--layout);
+        		@apply(--layout-vertical);
+        		@apply(--layout-center);
+        		/*border-style: solid;*/
+    			border-right-style: solid;
+    			border-right-color: #9e9e9e;
+    			border-right-width: 3px; 
+			}
+			iron-image{
+				margin-right: 20px;
+			}
+			#core{
+				margin-top: 20px;
+			}
+			#detail{
+				margin-top: 20px;
+			}
+			paper-button{
+				margin-left: 50%;
+				background-color: #FFEB3B;
+			}
+			#bouton{
+				@apply(--layout);
+				@apply(--layout-center);
+			}
+		</style>
+		<div class="layout horizontal">
+			<div id=image>
+				<iron-image style="width:400px; height:400px;" sizing="contain"
+  					src="{{user.imageUrl}}"></iron-image>
+				<div>{{user.nomComplet}}</div>
+			</div>
+			<div id="core">
+				<paper-listbox>
+					<paper-item>Nom :</paper-item>
+					<paper-item>Prenom :</paper-item>
+					<paper-item>Date de naissance :</paper-item>
+					<paper-item>Sexe :</paper-item>
+					<paper-item>Profession :</paper-item>
+					<paper-item>Groupe Sanguin :</paper-item>
+					<paper-item>Telephone :</paper-item>
+					<paper-item>Email :</paper-item>
+				</paper-listbox>
+
+			</div>
+			<div id="detail">
+				<paper-listbox>
+					<paper-item>{{user.nom}}</paper-item>
+					<paper-item>{{user.prenom}}</paper-item>
+					<paper-item>{{user.dateDeNaissance}}</paper-item>
+					<paper-item>{{user.sexe}}</paper-item>
+					<paper-item>{{user.profession}}</paper-item>
+					<paper-item>{{user.groupeSanguin}}</paper-item>
+					<paper-item>{{user.telephone}}</paper-item>
+					<paper-item>{{user.email}}</paper-item>
+				</paper-listbox>
+			</div>
+		</div>
+		<div id="bouton">
+			<paper-button raised>personne a contacter</paper-button>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'information-generale',
+			properties:{
+				user:{
+					type:Object,
+					value:{
+						nomComplet:"Yassine Hani",
+						nom:"Hani",
+						prenom:"Yassine",
+						dateDeNaissance:"02/12/1994",
+						sexe:"Masculin",
+						profession:"Designer",
+						groupeSanguin:"A+",
+						telephone:"+213 665 357 022",
+						email:"dy_hani@esi.dz",
+						imageUrl:"http://lorempixel.com/600/400"
+					}
+				}
+			}
+
+		});
+	</script>
+</dom-module>

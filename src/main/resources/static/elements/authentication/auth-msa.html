@@ -1,0 +1,119 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../js/bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../js/bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../js/bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../js/bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../js/bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../js/bower_components/iron-overlay-behavior/iron-overlay-backdrop.html">
+<link rel="import" href="../../js/bower_components/iron-overlay-behavior/iron-overlay-behavior.html">
+<link rel="import" href="../../js/bower_components/paper-spinner/paper-spinner.html">
+
+
+<!-- redux store -->
+<link rel="import" href="../store/redux-store.html">
+<!-- END redux store -->
+
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="auth-msa">
+	<template>
+		<style>
+			:host {
+				display: block;
+				width: 100%;
+				height: 100%;
+				background-image: url("../../img/backgrounds/background_login.jpg");
+				background-size: cover;
+
+			}
+			div#container{
+				@apply(--layout);
+        		@apply(--layout-vertical);
+        		@apply(--layout-center);		
+			}
+			paper-button{
+				background-color: #00CCCC;
+				color: white;
+				@apply(--layout);
+				@apply(--layout-center);
+				margin-top: 20px;
+			}
+			paper-card{
+				width: 400px;
+				@apply(--layout-self-center);
+				margin-top: 10%;
+			}
+			paper-input{
+				/*@apply(--layout);
+        		@apply(--layout-vertical);
+        		@apply(--layout-center);*/
+			}
+
+		</style>
+
+
+		<template is="dom-if" if="{{loading}}">
+			<simple-overlay id="backdrop" with-backdrop>
+			  <paper-spinner active></paper-spinner>
+			</simple-overlay>
+		</template>
+
+		<div id="container">
+			<iron-image src="../../img/logos/logo.png" preload sizing="cover"></iron-image>
+			<paper-card heading="Authentification"  elevation="4" animated-shadow="false">
+			  <div class="card-content">
+			  	<form is="iron-form" id="form" method="post" action="submit">
+			  		<input type="hidden" name="user" value="{{userName}}" required="true">
+			  		<paper-input id="user" name="user"  label="Nom utilisateur" value="{{userName}}" required="true" ></paper-input>
+
+			  		<input type="hidden" name="password" value="{{pwd}}" required="true">
+			  		<paper-input id="pwd" name="password" type="password" label="Mot de passe" value="{{pwd}}" required="true"></paper-input>
+			  		<paper-button raised on-tap="submit">Submit</paper-button>
+			  	</form>
+			  </div>
+			</paper-card>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'auth-msa',
+			behaviors:[ ReduxBehavior, AsynActionBehavior ],
+			properties:{
+				loading:{
+					type:Boolean,
+					statePath:"loading"
+				},
+				userName:String,
+				pwd:String
+			},
+			submit:function (e) {
+				
+				if (this.loading)this.$.backdrop.open; 
+				if (this.$.user.value==="user" && this.$.pwd.value==="pwd"){
+					// this.connecter= true;
+					this.dispatch('signUpWithTimeOut', {name : this.$.user.value, pwd : this.$.pwd.value});
+				}
+				else{
+					this.dispatch("signOut");
+				}
+				// this.$.form.submit();
+			}
+		});
+	</script>
+</dom-module>

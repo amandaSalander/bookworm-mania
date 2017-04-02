@@ -1,0 +1,109 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../js/bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../js/bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../../js/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../js/bower_components/paper-item/paper-item.html">
+
+
+
+<link rel="import" href="../drawer-views.html">
+<link rel="import" href="../drawer-content.html">
+
+
+<link rel="import" href="../gestion-stock/inventaire-msa.html">
+<link rel="import" href="../gestion-stock/entrees-msa.html">
+<link rel="import" href="../gestion-stock/sorties-msa.html">
+
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="gestion-stock">
+	<template>
+		<style is="custom-style" include="iron-flex">
+			:host {
+				display: block;
+			}
+			paper-listbox{
+				--paper-listbox-color:#FFF;
+				--paper-listbox-background-color:#00CCCC;
+			}
+			paper-item{
+				--paper-item-focused:{
+					color:#000;
+				};
+				--paper-item-focused-before:{
+					color:#000;
+				};
+				--paper-item-selected:{
+					color:#000; 
+				};
+				--paper-item{
+					font-size: 24px;
+				}
+			}
+		</style>
+
+		<div class="layout horizontal">
+			<drawer-views>
+
+				<paper-listbox selected="{{selected}}">
+					<template is="dom-repeat" items="{{gestion.categorie}}">
+						<paper-item>[[item]]</paper-tab>
+					</template>
+				</paper-listbox>
+				
+				<!-- <h1>hallo [[gestion]]</h1> -->
+			</drawer-views>
+			<drawer-content>
+			 	<iron-pages id="pages" selected="{{selected}}">
+			 		<template is="dom-repeat" items="{{gestionRessources}}">
+			 			<!-- <paper-table-ajax></paper-table-ajax> -->
+			 			<section><inventaire-msa></inventaire-msa></section>
+			 			<section><entrees-msa></entrees-msa></section>
+			 			<section><sorties-msa></sorties-msa></section>
+			 		</template>
+			 	</iron-pages>
+			</drawer-content>	
+		</div>
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'gestion-stock',
+			properties:{
+				gestion:Object,
+				selected: {
+              		type: Number,
+              		value: 0
+            	},
+            	gestionRessources:{
+            		type:Array,
+            		computed:"computedGestionRessources(gestion)"
+            	}
+
+			},
+			computedGestionRessources: function (gestion) {
+				return gestion.categorie;
+			}
+
+		});
+	</script>
+</dom-module>

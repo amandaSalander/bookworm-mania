@@ -1,0 +1,92 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../js/bower_components/paper-card/paper-card.html">
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="suivi-patient">
+	<template>
+		<style>
+			:host {
+				display: block;
+				@apply(--layout);
+        		@apply(--layout-vertical);
+        		@apply(--layout-center);
+			}
+			paper-card{
+				width: 90%;
+				height: 50px;
+				margin-top: 20px;
+			}
+			div#headerPic{
+				@apply(--layout);
+        		@apply(--layout-vertical);
+        		@apply(--layout-center);
+			}
+			paper-card#headerPic{
+				margin-top: : 40px;
+				height: 110px;
+				width: 120%;
+				@apply(--layout);
+        		@apply(--layout-center);
+        		background-color: #FFEB3B;
+			}
+			label{
+				margin-left: 20px;
+				font-size: 22px;
+
+			}			
+		</style>
+			<div id="headerPic" >
+				<paper-card id="headerPic" elevation="1" animated-shadow="false" >
+					<div class="card-content">
+						<iron-image  style="width:100px; height:100px;" sizing="contain" ></iron-image>
+						<label>[[user.firstName]] [[user.lastName]] !</label>
+					</div>
+				</paper-card>
+			</div>
+			<template is="dom-repeat" items="{{user.suivis}}" as="suivi">
+				<paper-card elevation="1" animated-shadow="false">
+				  <div class="card-content">{{suivi}}</div>
+				</paper-card>
+			</template>
+	</template>
+	<script>
+		Polymer({
+			is: 'suivi-patient',
+			properties:{
+				user:{
+					type:Object,
+					value:{
+						userPic:"../../img/logos/logo.png",
+						firstName:"Yassine",
+						lastName:"Hani",
+						suivis:[ 
+								"Inscription le 24 Février 2017",
+								"Examen médical le 24 Février 2017",
+								"Passage chez le stomathérapeute le 26 Février 2017",
+								"Pris en charge par la CNAS",
+								"Récupération du matériel le 01 Mars 2017"
+
+							   ]
+					}
+				}
+			}
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,123 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../js/bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../js/bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../js/bower_components/paper-fab/paper-fab.html">
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="antecedant-msa">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			paper-item{
+
+				--paper-item:{
+					width: 90%;
+					margin-left: 2.5%;
+					margin-top: 20px;
+				};
+			}
+			.menu-trigger:hover{
+				box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+			}
+			.menu-trigger{
+				--paper-item-focused:{
+					background-color:#FEFEFE;
+					border-style: solid;
+					border-color: #00CCCC;
+					border-width: 2px;
+				};
+				--paper-item:{
+					border-style: solid;
+					border-color: #00CCCC;
+					border-width: 1px;
+					width: 90%;
+					margin-left: 2.5%;
+					margin-top: 20px;
+				};
+			}
+
+		</style>
+
+
+		<paper-menu>
+		  <paper-submenu>
+		    <paper-item class="menu-trigger">Personnels</paper-item>
+		    <paper-menu class="menu-content">
+		      <template is="dom-repeat" items="{{personnel}}" as="personnel">
+		      	<paper-item>[[personnel.name]]  [[personnel.type]]</paper-item>	
+		      </template>
+		    </paper-menu>
+		  </paper-submenu>
+		  <paper-submenu>
+		    <paper-item class="menu-trigger">Familiaux</paper-item>
+		    <paper-menu class="menu-content">
+		      <template is="dom-repeat" items="{{familiaux}}" as="familial">
+		      	<paper-item>[[familial.name]]  [[familial.type]]</paper-item>	
+		      </template>
+		    </paper-menu>
+		  </paper-submenu>
+		</paper-menu>
+		<paper-fab icon="icons:add"></paper-fab>
+
+
+	</template>
+	<script>
+		Polymer({
+			is: 'antecedant-msa',
+			properties:{
+				personnel:{
+					type:Array,
+					value:[
+							{
+								name:"Name Allergie",
+								type:"allergie"
+							},
+							{
+								name:"Name Allergie",
+								type:"allergie"
+							},
+							{
+								name:"Name Allergie",
+								type:"allergie"
+							}
+						  ]
+				},
+				familiaux:{
+					type:Array,
+					value:[
+							{
+								name:"Name Allergie",
+								type:"allergie"
+							},
+							{
+								name:"Name Allergie",
+								type:"allergie"
+							},
+							{
+								name:"Name Allergie",
+								type:"allergie"
+							}
+						  ]
+				}
+			}
+		});
+	</script>
+</dom-module>

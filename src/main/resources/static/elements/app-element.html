@@ -1,0 +1,307 @@
+<link rel="import" href="../js/bower_components/polymer/polymer.html">
+
+
+
+
+<link rel="import" href="../js/bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../js/bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../js/bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../js/bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../js/bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../js/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../js/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../js/bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../js/bower_components/iron-ajax/iron-ajax.html">
+
+
+<!-- redux store -->
+<link rel="import" href="store/redux-store.html">
+<!-- END redux store -->
+
+<!-- routing import -->
+<link rel="import" href="../js/bower_components/app-route/app-route.html">
+<link rel="import" href="../js/bower_components/app-route/app-location.html">
+<link rel="import" href="../js/bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../js/bower_components/iron-pages/iron-pages.html">
+<!-- END routing import -->
+
+<!-- styles -->
+<link rel="import" href="../js/bower_components/app-layout/app-grid/app-grid-style.html">
+<!-- end styles -->
+
+
+<!-- material element -->
+<link rel="import" href="../js/bower_components/paper-button/paper-button.html">
+<link rel="import" href="../js/bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../js/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../js/bower_components/paper-badge/paper-badge.html">
+<!-- END material element -->
+
+
+
+<link rel="import" href="pages/show-menu.html">
+
+
+<link rel="import" href="authentication/auth-msa.html">
+
+<dom-module id="app-element">
+  <template>
+    <style include="app-grid-style">
+      :host {
+        display: block;
+        --app-grid-columns: 6;
+        --app-grid-item-height: 30px;
+        --app-grid-item-height: 30px;
+      }
+      app-header{
+      	background-color: white;
+        height: 132px;
+        width:101%;
+        margin-left:-10px;
+        margin-top:-8px;
+    	  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+      }
+      app-header:hover{
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+      }
+      app-toolbar:first-child{
+        background-image: url("../img/backgrounds/background_blue.jpg");
+        height: 68px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+      app-drawer{
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        background-color: #00CCCC;
+      }
+      app-drawer:hover{
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
+      }
+      app-toolbar:last-child{
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+      }
+      ul {
+      padding: 0;
+      list-style: none;
+      }
+
+      li{
+        width: 100px;
+      }
+
+    .item {
+      background-color: white;
+    }
+    a{
+      text-decoration: none;
+      color: black;
+      margin-left: 10px;
+    }
+    paper-button:hover{
+      text-decoration: none;
+      color: white;
+      background-color: #00CCCC;
+      padding-top: 20px;
+      padding-bottom: 20px; 
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); 
+    }
+    paper-button{
+      font-size: 16px;
+      box-shadow: none;
+    }
+    
+    paper-icon-button{
+      color: #FFEB3B;
+    }
+    paper-icon-button:last-child{
+      margin-left: 108px;
+    }
+    a.iron-selected paper-button{
+        color: black;
+        font-weight: bold;
+        border-bottom: 4px solid #00CCCC;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    img{
+      width: 200px;
+      height: 64px;
+    }
+    paper-fab[mini] {
+    --paper-fab-background: #00CCCC;
+    }
+    #logo{
+      margin-right: 500px;
+    }
+    #number{
+      margin-left: -10px;
+      color: #000;
+    }
+    paper-badge{
+      margin-left: -10px;
+    }
+
+    </style>
+    
+    <!-- routing / navigation here -->
+
+    <app-location route="{{route}}" use-hash-as-path ></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>  
+
+    <!-- END routing / navigation here -->
+
+    <iron-ajax
+       auto
+       url="/application"
+       handle-as="json"
+       last-response="{{application}}"></iron-ajax>
+
+
+    <iron-ajax
+       auto
+       url="/vue"
+       handle-as="json"
+       last-response="{{vue}}"></iron-ajax>
+
+
+    <template is="dom-if" if="[[!user]]">   
+      <auth-msa connecter="{{connecter}}"></auth-msa>
+    </template>
+
+
+    <template is="dom-if" if="[[user]]">
+
+    <app-header-layout>  
+      <app-header condenses reveals effects="waterfall">
+    			<app-toolbar >
+            <paper-fab mini icon="info"></paper-fab>
+      		  <div main-title></div>
+            <iron-selector  role="navigation"  selected="[[vueCurrent]]" attr-for-selected="name">
+              <a id="logo" href="#/show-menu"><img src="../img/logos/logo.png"></a>  
+            </iron-selector>
+
+
+            
+            <paper-fab mini icon="help"></paper-fab>
+
+    			</app-toolbar>
+          <app-toolbar>
+            <iron-selector id="irons" role="navigation"  selected="[[vueCurrent]]" attr-for-selected="name">
+              <template is="dom-repeat" items="{{vue}}">
+                <a name="[[item.name]]" href$="[[item.urlLink]]"  >
+                  <paper-button raised>[[item.nom]]</paper-button>
+                </a>
+              </template>            
+            </iron-selector>
+            <div main-title></div>
+            
+            <paper-icon-button id="number" icon="communication:email" alt="inbox">
+            </paper-icon-button>
+            <paper-badge for="number" label="4">
+            </paper-badge>
+            
+
+          </app-toolbar>
+          
+  	  </app-header>
+
+    
+    <app-drawer-layout> 
+<!--       <app-drawer id="drawer" opened swipe-open tabindex="0">
+      </app-drawer>  -->
+       
+      <iron-pages role="main" selected="[[page]]" attr-for-selected="name" selected-attribute="visible" fallback-selection="404">
+      <!-- home view -->
+      <show-menu name="show-menu" views="[[vue]]"></show-menu>
+      <gestion-stock name="gestion-stock" gestion="[[vueCurrent]]"></gestion-stock>
+      <msa-comptabilite name="msa-comptabilite" comptabilite="[[vueCurrent]]"></msa-comptabilite>
+      <msa-patient name="msa-patient" patient="[[vueCurrent]]"></msa-patient>
+      <view-404 name="view-404"></view-404>
+      <!-- <shop-home name="home" categories="[[categories]]"></shop-home> -->
+      </iron-pages>
+    </app-drawer-layout>
+    </app-header-layout>
+
+    </template>
+    
+  </template>
+
+
+
+  <script>
+    Polymer({
+      is: 'app-element',
+      behaviors:[ ReduxBehavior],
+      properties:{
+        appTitle:{
+          type:String,
+          value:"YAKS"
+        },
+        user:{
+          type:Object,
+          statePath:"user"
+        },
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        },
+        application:{
+          type: Array
+        },
+        vue:{
+          type:Array
+        },
+        vueCurrent:{
+          type:Object,
+          // value:"gestion-stock",
+          computed:'_computedVueCurrent(vue, page)'
+        },
+        connecter:{
+          type:Boolean,
+          statePath:"connecter"            
+        }
+      },
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+       _routePageChanged: function(page) {
+        this.page = page || 'show-menu';
+        // console.log(this.vue)
+      },
+
+      _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails       
+                var resolvedPageUrl = this.resolveUrl("pages/"+page + '.html');
+                this.importHref(resolvedPageUrl, null, this._showPage404, true);
+      },
+
+      _showPage404: function() {
+        this.page = 'view-404';
+
+      },
+      clickedItem: function(){
+        console.log("I'm clicked ");
+      },
+      _computedVueCurrent:function (vue, page) {
+        console.log("i'm the page : "+page);
+        j=0;
+        for (var i = 0; i < vue.length; i++) {
+           if (vue[i].name===page){
+              return this.vue[i];      
+           }
+        }
+        
+      }
+
+    });
+  </script>
+</dom-module>

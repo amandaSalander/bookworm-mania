@@ -1,0 +1,14 @@
+{
+  "name": "paper-vert-tabs",
+  "homepage": "https://github.com/Evanfeenstra/paper-vert-tabs",
+  "_release": "a01cf3cf92",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a01cf3cf92b1d4d84908860d271423e6cfec0cf9"
+  },
+  "_source": "https://github.com/Evanfeenstra/paper-vert-tabs.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/Evanfeenstra/paper-vert-tabs.git",
+  "_direct": true
+}

@@ -1,0 +1,48 @@
+<link rel="import" href="../js/bower_components/polymer/polymer.html">
+<link rel="import" href="drawer-view.html">
+<link rel="import" href="../js/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="view-layout">
+	<template>
+		<style  is="custom-style" include="iron-flex" >
+			:host {
+				display: block;
+			}
+			drawer-view{
+				display: inline;
+			}
+/*			content{
+				display: inline;
+			}*/
+		</style>
+		<div class="layout horizontal">
+			<drawer-view></drawer-view>
+			<content></content>
+		</div>
+
+		<!-- <div></div>
+		<drawer-view></drawer-view>
+		<content></content> -->
+
+	</template>
+	<script>
+		Polymer({
+			is: 'view-layout'
+		});
+	</script>
+</dom-module>

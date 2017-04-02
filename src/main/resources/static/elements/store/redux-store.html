@@ -1,0 +1,66 @@
+<link rel="import" href="../../js/bower_components/polymer-redux/polymer-redux.html">
+
+<script>
+
+	const actionType= {
+		USER_CONNECTED :"USER_CONNECTED",
+		SIGN_UP_STARTED:"SIGN_UP_STARTED",
+		SIGN_UP_COMPLETED:"SIGN_UP_COMPLETED",
+		SIGN_UP_CANCELED: "SIGN_UP_CANCELED"
+	};
+	const initialState={
+		connecter: true,
+		loading:false,
+		user:null
+	};
+
+	const reducer = (state, action)=>{
+		if (!state) return initialState;
+		switch(action.type){
+			case actionType.USER_CONNECTED:
+			connecter= state.connecter;
+			connecter = action.connect;
+			return Object.assign({}, state, { connecter : connecter});
+
+			case actionType.SIGN_UP_STARTED:
+			return Object.assign({},state, {loading:true});
+
+			case actionType.SIGN_UP_COMPLETED:
+			return Object.assign({}, state, { 
+												loading: false,
+												user: action.user
+											});
+
+			case actionType.SIGN_UP_CANCELED:
+			return Object.assign({}, state, {
+												loading:false,
+												user:null
+											});
+
+
+		}
+	};
+
+	const store= Redux.createStore(reducer, Redux.applyMiddleware(ReduxThunk.default));
+
+
+	const ReduxBehavior = PolymerRedux(store);
+
+
+	const AsynActionBehavior ={
+		actions:{
+			signUpWithTimeOut: function (user) {
+				return function(dispatch) { 
+					dispatch({type : actionType.SIGN_UP_STARTED});
+					setTimeout(function(){
+					dispatch({type : actionType.SIGN_UP_COMPLETED, user: user})
+				},3000);
+				};
+			},
+			signOut:function(){
+				return function (dispatch) {dispatch({type : actionType.SIGN_UP_CANCELED})}
+			}
+		}
+	}
+
+</script>

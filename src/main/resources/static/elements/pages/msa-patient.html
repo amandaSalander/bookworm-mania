@@ -1,0 +1,121 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../js/bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../js/bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../../js/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../js/bower_components/paper-item/paper-item.html">
+
+
+
+<link rel="import" href="../drawer-views.html">
+<link rel="import" href="../drawer-content.html">
+
+
+<link rel="import" href="../msa-patient/list-patient.html">
+<link rel="import" href="../msa-patient/information-generale.html">
+<link rel="import" href="../msa-patient/antecedant-msa.html">
+<link rel="import" href="../msa-patient/examen-medicaux.html">
+<link rel="import" href="../msa-patient/stoma-msa.html">
+<link rel="import" href="../msa-patient/documents-patient.html">
+<link rel="import" href="../msa-patient/suivi-patient.html">
+
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="msa-patient">
+	<template>
+		<style is="custom-style" include="iron-flex">
+			:host {
+				display: block;
+			}
+			paper-listbox{
+				--paper-listbox-color:#FFF;
+				--paper-listbox-background-color:#00CCCC;
+			}
+			paper-item{
+				--paper-item-focused:{
+					color:#000;
+				};
+				--paper-item-focused-before:{
+					color:#000;
+				};
+				--paper-item-selected:{
+					color:#000; 
+				};
+				--paper-item{
+					font-size: 24px;
+				}
+			}
+		</style>
+
+		<div class="layout horizontal">
+			<drawer-views>
+
+				<paper-listbox selected="{{selected}}">
+						<paper-item>Listes des patients</paper-item>
+					<template is="dom-repeat" items="{{patient.categorie}}">
+						<paper-item>[[item]]</paper-item>
+					</template>
+				</paper-listbox>
+				
+				<!-- <h1>hallo [[gestion]]</h1> -->
+			</drawer-views>
+			<drawer-content>
+				<template is="dom-if" if="{{!selected}}">
+					<list-patient></list-patient>
+				</template>
+
+			 	<iron-pages id="pages" selected="{{selected}}">
+			 		<template is="dom-repeat" items="{{patient.categorie}}">
+			 			<!-- <paper-table-ajax></paper-table-ajax> -->
+			 			<section></section>
+			 			<section><information-generale></information-generale></section>
+			 			<section><antecedant-msa></antecedant-msa></section>
+			 			<section><examen-medicaux></examen-medicaux></section>
+			 			<section><stoma-msa></stoma-msa></section>
+			 			<section><documents-patient></documents-patient></section>
+			 			<section><suivi-patient></suivi-patient></section>
+			 		</template>
+			 	</iron-pages>
+			</drawer-content>	
+		</div>
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'msa-patient',
+			properties:{
+				patient:Object,
+				selected: {
+              		type: Number,
+              		value:2,
+            	},
+            	patientRessources:{
+            		type:Array,
+            		computed:"computedPatientRessources(patient)"
+            	}
+
+			},
+			computedPatientRessources: function (patient) {
+				return patient.categorie;
+			}
+
+		});
+	</script>
+</dom-module>

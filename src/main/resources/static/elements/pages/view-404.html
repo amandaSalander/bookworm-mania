@@ -1,0 +1,41 @@
+<link rel="import" href="../../js/bower_components/polymer/polymer.html">
+<link rel="import" href="../../js/bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../js/bower_components/iron-flex-layout/iron-flex-layout.html">
+<!--
+A comment describing this element
+
+Example:
+
+    <my-elem></my-elem>
+
+Example:
+
+    <my-elem>
+      <h2>Hello my-elem</h2>
+    </my-elem>
+
+@demo demo/index.html
+-->
+
+<dom-module id="view-404">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			paper-card{
+				@apply(--layout);
+        		@apply(--layout-vertical);
+        		@apply(--layout-center);
+			}
+		</style>
+		<paper-card heading="Cannot load the wanted page" image="" elevation="4" animated-shadow="false">
+		  <div class="card-content">Failed to load the page, you may have entered a wrong url please enter a correct one</div>
+		</paper-card>
+	</template>
+	<script>
+		Polymer({
+			is: 'view-404'
+		});
+	</script>
+</dom-module>
